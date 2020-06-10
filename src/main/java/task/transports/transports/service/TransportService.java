@@ -1,13 +1,14 @@
 package task.transports.transports.service;
 
-import task.transports.transports.model.dto.TransportDTO;
-import task.transports.transports.model.dataobject.Transport;
+import org.springframework.stereotype.Component;
+import task.transports.transports.model.dataobject.TransportSummary;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-public interface TransportService<D extends TransportDTO, T extends Transport> {
-
-    List<File> processFiles(List<File> files) throws IOException;
+@Component
+public interface TransportService {
+    Map<String, TransportSummary> processFiles(List<File> files) throws IOException;
 }

@@ -1,9 +1,22 @@
 package task.transports.transports.model.dataobject;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
-@Data
-public class Car extends Transport{
+@Value
+public class Car extends Transport {
     private String manufacturer;
-    private String passengerCapacity;
+    private int passengerCapacity;
+
+    @Builder
+    public Car(String model, String manufacturer, int passengerCapacity) {
+        super(model);
+        this.manufacturer = manufacturer;
+        this.passengerCapacity = passengerCapacity;
+    }
+
+    @Override
+    public Integer getPassengerCapacity() {
+        return passengerCapacity;
+    }
 }

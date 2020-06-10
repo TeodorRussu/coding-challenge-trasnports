@@ -1,5 +1,6 @@
 package task.transports.transports.input.datasource;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +11,16 @@ import java.util.List;
 @Component
 public class FileSystemDataSource implements DataSource {
 
-    @Value("/Users/rusiashka/Desktop/folder")
+    @Setter
+    @Value("${fs.files.path.input}")
     private String path;
 
     @Override
     public List<File> getFiles() {
-        return Arrays.asList(new File(path).listFiles());
+        File inputDirectory = new File(path);
+        if (!inputDirectory.isDirectory()) {
+            throw new IllegalArgumentException("Invalid path");
+        }
+        return Arrays.asList(inputDirectory.listFiles());
     }
 }

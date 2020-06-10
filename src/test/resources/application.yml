@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: fs
+fs:
+  files:
+    path:
+      input: 'src/test/resources/test_folder/valid_input'
+      output: 'src/test/resources/test_folder/output'

@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: fs
+fs:
+  files:
+    path:
+      input: '/Users/rusiashka/Desktop/folder'
+      output: '/Users/rusiashka/Desktop/output_folder'

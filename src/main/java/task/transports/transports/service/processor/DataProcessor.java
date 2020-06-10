@@ -9,5 +9,7 @@ import java.util.Map;
 
 @Component
 public interface DataProcessor {
-    public Map<String, List<TransportSummary>> createSummary(Map<String, List<Transport>> dataObjects);
+    public Map<String, TransportSummary> createSummary(Map<String, List<Transport>> dataObjects);
+
+
 }

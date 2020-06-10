@@ -1,6 +1,7 @@
 package task.transports.transports.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import task.transports.transports.model.dataobject.Transport;
 import task.transports.transports.model.dataobject.TransportSummary;
 import task.transports.transports.model.dto.TransportDTO;
@@ -13,22 +14,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class TransportServiceImpl implements TransportService<TransportDTO, Transport> {
+@Component
+public class TransportServiceImpl implements TransportService {
 
     @Autowired
-    private TransportMapper mapper;
+    private TransportMapper transportMapper;
     @Autowired
     private FileHandler fileHandler;
     @Autowired
     private DataProcessor dataProcessor;
 
     @Override
-    public List<File> processFiles(List<File> files) throws IOException {
+    public Map<String, TransportSummary> processFiles(List<File> files) throws IOException {
 
         Map<String, List<TransportDTO>> inputObjects = fileHandler.getInputDataFromFiles(files);
-        Map<String, List<Transport>> dataObjects = mapper.mapTransportDTOsToTransport(inputObjects);
-        Map<String, List<TransportSummary>> transportSummary = dataProcessor.createSummary(dataObjects);
+        Map<String, List<Transport>> dataObjects = transportMapper.mapTransportDTOsToTransport(inputObjects);
 
-        return null;
+        return dataProcessor.createSummary(dataObjects);
     }
 }

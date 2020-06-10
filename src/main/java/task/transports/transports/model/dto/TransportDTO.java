@@ -1,9 +1,15 @@
 package task.transports.transports.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransportDTO {
 
     @JsonProperty("model")
@@ -13,18 +19,18 @@ public class TransportDTO {
     private String manufacturer;
 
     @JsonProperty("passenger-capacity")
-    private String passengerCapacity;
+    private Integer passengerCapacity;
 
     @JsonProperty("number-wagons")
-    private int numberWagons;
+    private Integer numberWagons;
 
     @JsonProperty("w-passenger-capacity")
-    private int wPassengerCapacity;
+    private Integer wPassengerCapacity;
 
     @JsonProperty("b-passenger-capacity")
-    private int bPassengerCapacity;
+    private Integer bPassengerCapacity;
 
     @JsonProperty("e-passenger-capacity")
-    private int ePassengerCapacity;
+    private Integer ePassengerCapacity;
 
 }

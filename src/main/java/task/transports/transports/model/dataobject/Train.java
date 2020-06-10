@@ -1,11 +1,23 @@
 package task.transports.transports.model.dataobject;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 
-@Data
-public class Train extends Transport{
+@Value
+public class Train extends Transport {
 
-    private int numberWagons;
-    private int wPassengerCapacity;
+    private Integer numberWagons;
+    private Integer wPassengerCapacity;
 
+    @Builder
+    public Train(String model, int numberWagons, int wPassengerCapacity) {
+        super(model);
+        this.numberWagons = numberWagons;
+        this.wPassengerCapacity = wPassengerCapacity;
+    }
+
+    @Override
+    public Integer getPassengerCapacity() {
+        return numberWagons * wPassengerCapacity;
+    }
 }

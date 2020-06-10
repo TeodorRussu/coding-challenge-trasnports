@@ -7,5 +7,5 @@ import java.util.List;
 
 @Component
 public interface DataSource {
-    public List<File> getFiles();
+    public List<File> getFiles() throws Exception;
 }
