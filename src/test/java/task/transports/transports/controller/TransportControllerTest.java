@@ -1,6 +1,7 @@
 package task.transports.transports.controller;
 
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import task.transports.transports.TestingResources;
 
 import java.io.File;
+import java.util.Objects;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "fs")
@@ -23,20 +25,23 @@ class TransportControllerTest {
     @BeforeEach
     private void setUp() {
         //clean output directory
-        outputDirectory = new File(TestingResources.OUTPUT_PATH);
-        for (File file : outputDirectory.listFiles())
-            if (!file.isDirectory())
-                file.delete();
+        cleanDirectory();
+    }
+
+    @AfterEach
+    void tearDown() {
+        //clean output directory
+        cleanDirectory();
     }
 
     @SneakyThrows
     @Test
     void processValidFile() {
         File[] outputfiles = outputDirectory.listFiles();
-        Assertions.assertTrue(outputfiles.length == 0);
+        Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
         controller.processData();
         outputfiles = outputDirectory.listFiles();
-        Assertions.assertTrue(outputfiles.length > 0);
+        Assertions.assertTrue(Objects.requireNonNull(outputfiles).length > 0);
     }
 
     @Test
@@ -45,11 +50,16 @@ class TransportControllerTest {
         ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.INVALID_INPUT_PATH);
 
         File[] outputfiles = outputDirectory.listFiles();
-        Assertions.assertTrue(outputfiles.length == 0);
+        Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
 
         controller.processData();
-        Assertions.assertTrue(outputfiles.length == 0);
+        Assertions.assertEquals(0, outputfiles.length);
     }
 
-
+    private void cleanDirectory() {
+        outputDirectory = new File(TestingResources.OUTPUT_PATH);
+        for (File file : Objects.requireNonNull(outputDirectory.listFiles()))
+            if (!file.isDirectory())
+                file.delete();
+    }
 }

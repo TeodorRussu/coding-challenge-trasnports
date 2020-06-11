@@ -12,7 +12,6 @@ import task.transports.transports.service.processor.DataProcessor;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class TransportServiceImpl implements TransportService {
@@ -25,10 +24,10 @@ public class TransportServiceImpl implements TransportService {
     private DataProcessor dataProcessor;
 
     @Override
-    public Map<String, TransportSummary> processFiles(List<File> files) throws IOException {
+    public TransportSummary processFile(File file) throws IOException {
 
-        Map<String, List<TransportDTO>> inputObjects = fileHandler.getInputDataFromFiles(files);
-        Map<String, List<Transport>> dataObjects = transportMapper.mapTransportDTOsToTransport(inputObjects);
+        List<TransportDTO> inputObjects = fileHandler.getInputDataFromFile(file);
+        List<Transport> dataObjects = transportMapper.mapTransportDTOsToTransport(inputObjects);
 
         return dataProcessor.createSummary(dataObjects);
     }

@@ -9,12 +9,11 @@ import task.transports.transports.model.dto.TransportDTO;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 class FileHandlerImplTest {
 
     FileHandlerImpl fileHandler;
-    List<File> filesList;
+    File inputFile;
 
     @BeforeEach
     void setUp() {
@@ -23,16 +22,16 @@ class FileHandlerImplTest {
 
     @Test
     void getValidInputDataFromFiles() throws IOException {
-        filesList = TestingResources.getValidFiles();
-        Map<String, List<TransportDTO>> inputData = fileHandler.getInputDataFromFiles(filesList);
+        inputFile = TestingResources.getValidFile();
+        List<TransportDTO> inputData = fileHandler.getInputDataFromFile(inputFile);
         Assertions.assertNotNull(inputData);
-        Assertions.assertEquals(6, inputData.values().iterator().next().size());
+        Assertions.assertEquals(6, inputData.size());
     }
 
     @Test
     void getInvalidInputDataFromFiles() throws IOException {
-        filesList = TestingResources.getInvalidFiles();
-        Map<String, List<TransportDTO>> inputData = fileHandler.getInputDataFromFiles(filesList);
+        inputFile = TestingResources.getInvalidFile();
+        List<TransportDTO> inputData = fileHandler.getInputDataFromFile(inputFile);
         Assertions.assertNotNull(inputData);
         Assertions.assertTrue(inputData.isEmpty());
     }

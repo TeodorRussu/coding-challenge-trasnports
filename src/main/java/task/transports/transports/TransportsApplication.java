@@ -28,4 +28,3 @@ public class TransportsApplication implements CommandLineRunner {
         }
     }
 }
-

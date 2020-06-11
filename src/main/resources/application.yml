@@ -1,8 +1,18 @@
-spring:
-  profiles:
-    active: fs
-fs:
-  files:
-    path:
-      input: '/Users/rusiashka/Desktop/folder'
-      output: '/Users/rusiashka/Desktop/output_folder'
+# set the active profile
+# Accepted values:
+#                 - 'aws' - for loading the input file from S3
+#                 - 'fs' - for loading the input file from the File System
+spring.profiles.active: 'aws'
+
+
+#If File System profile is selected, set the input directory path (please do not include the slash separator at the end of the path):
+fs.path: '/Users/trussu/Desktop/folder'
+
+#Input file name. If the file used for running the program has an extension, please specify it: (i.e. file_data.json)
+filename: 'file_data'
+
+#property for the S3 bucket name
+aws.bucket: 'teodor-elm327'
+
+#output directory (please do not include the slash separator at the end of the path)
+output.directory: '/Users/trussu/Desktop/folder'

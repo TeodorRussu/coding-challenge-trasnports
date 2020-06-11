@@ -6,19 +6,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"planes", "trains", "cars"})
 public class TransportSummary {
 
     @JsonProperty("planes")
-    private int planes;
+    private Integer planes;
 
     @JsonProperty("cars")
-    private int cars;
+    private Integer cars;
 
     @JsonProperty("trains")
-    private int trains;
+    private Integer trains;
 
 }

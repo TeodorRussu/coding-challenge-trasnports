@@ -8,7 +8,6 @@ import task.transports.transports.model.dataobject.Transport;
 import task.transports.transports.model.dto.TransportDTO;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 class TransportMapperImplTest {
@@ -22,29 +21,23 @@ class TransportMapperImplTest {
 
     @Test
     void mapTransportDTOsToTransport() {
-        String filename = "my file";
-        Map<String, List<TransportDTO>> unmappedData = TestingResources.getMapWithTransportDTOs(filename);
+        List<TransportDTO> unmappedData = TestingResources.getTransportDTOsList();
 
-        List<String> unmappedModels = unmappedData.values().stream().flatMap(list -> list.stream()).map(item -> item.getModel()).collect(Collectors.toList());
+        List<String> unmappedModels = unmappedData.stream().map(TransportDTO::getModel).collect(Collectors.toList());
 
-        Map<String, List<Transport>> mappedData = transportMapper.mapTransportDTOsToTransport(unmappedData);
-        List<String> mappedModels = mappedData.values().stream().flatMap(list -> list.stream()).map(item -> item.getModel()).collect(Collectors.toList());
-        Assertions.assertTrue(mappedData.keySet().iterator().next().equals(filename));
-        Assertions.assertTrue(mappedData.values().iterator().next().size() == 2);
+        List<Transport> mappedData = transportMapper.mapTransportDTOsToTransport(unmappedData);
+        List<String> mappedModels = mappedData.stream().map(Transport::getModel).collect(Collectors.toList());
+
+        Assertions.assertEquals(unmappedData.size(), mappedData.size());
         Assertions.assertTrue(mappedModels.containsAll(unmappedModels));
     }
 
     @Test
     void mapInvalidTransportDTOsToTransport() {
-        String filename = "my file";
-        Map<String, List<TransportDTO>> unmappedData = TestingResources.getMapWithInvalidTransportDTOs(filename);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            transportMapper.mapTransportDTOsToTransport(unmappedData);
-        });
-    }
+        List<TransportDTO> unmappedData = TestingResources.getInvalidTransportDTOsList();
 
+        List<Transport> mappedData = transportMapper.mapTransportDTOsToTransport(unmappedData);
 
-    @Test
-    void mapTransportToTransportSummary() {
+        Assertions.assertTrue(mappedData.isEmpty());
     }
 }

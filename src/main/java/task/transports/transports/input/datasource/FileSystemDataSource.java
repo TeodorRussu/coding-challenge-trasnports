@@ -2,25 +2,30 @@ package task.transports.transports.input.datasource;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
+@Profile("fs")
 public class FileSystemDataSource implements DataSource {
 
+    public static final String DELIMITER = "//";
     @Setter
-    @Value("${fs.files.path.input}")
+    @Value("${fs:path}")
     private String path;
 
+    @Setter
+    @Value("${filename}")
+    private String fileName;
+
     @Override
-    public List<File> getFiles() {
-        File inputDirectory = new File(path);
-        if (!inputDirectory.isDirectory()) {
+    public File getInputFile() {
+        File inputFile = new File(path + DELIMITER + fileName);
+        if (inputFile.isDirectory()) {
             throw new IllegalArgumentException("Invalid path");
         }
-        return Arrays.asList(inputDirectory.listFiles());
+        return inputFile;
     }
 }

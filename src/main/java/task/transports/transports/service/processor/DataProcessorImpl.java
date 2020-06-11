@@ -1,5 +1,6 @@
 package task.transports.transports.service.processor;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.transports.transports.model.dataobject.Transport;
@@ -13,27 +14,17 @@ import java.util.stream.Collectors;
 @Component
 public class DataProcessorImpl implements DataProcessor {
 
-    @Autowired
+    @Setter(onMethod = @__({@Autowired}))
     TransportMapper transportMapper;
 
     @Override
-    public Map<String, TransportSummary> createSummary(Map<String, List<Transport>> dataObjects) {
-
-        return dataObjects.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> transportsToSummary(entry.getValue())));
-    }
-
-    public TransportSummary transportsToSummary(List<Transport> transports) {
+    public TransportSummary createSummary(List<Transport> transports) {
 
         Map<String, Integer> collect = transports.stream()
-                .collect(Collectors.toMap(transport -> transport.getClass().getSimpleName(), transport ->
-                        transport.getPassengerCapacity(), Integer::sum
-                ));
+            .collect(Collectors.toMap(transport -> transport.getClass().getSimpleName(),
+                                      Transport::getPassengerCapacity, Integer::sum
+            ));
         return transportMapper.mapTransportToTransportSummary(collect);
-
     }
 
 }

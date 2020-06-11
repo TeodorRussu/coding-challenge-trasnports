@@ -1,8 +1,13 @@
-spring:
-  profiles:
-    active: fs
-fs:
-  files:
-    path:
-      input: 'src/test/resources/test_folder/valid_input'
-      output: 'src/test/resources/test_folder/output'
+spring.profiles.active: fs
+
+
+fs:path: 'src/test/resources/test_folder/valid_input'
+
+
+filename: file_data
+
+
+aws.bucket: 'teodor-elm327'
+
+
+output.directory: 'src/test/resources/test_folder/output'

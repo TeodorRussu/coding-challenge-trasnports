@@ -10,13 +10,10 @@ import task.transports.transports.output.OutputService;
 import task.transports.transports.service.TransportService;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 @Component
 @Data
 public class TransportController {
-
     @Setter(onMethod = @__({@Autowired}))
     private DataSource dataSource;
     @Setter(onMethod = @__({@Autowired}))
@@ -25,8 +22,9 @@ public class TransportController {
     private OutputService outputService;
 
     public void processData() throws Exception {
-        List<File> files = dataSource.getFiles();
-        Map<String, TransportSummary> processed = transportService.processFiles(files);
-        outputService.processOutput(processed);
+        File inputFile = dataSource.getInputFile();
+        TransportSummary processed = transportService.processFile(inputFile);
+
+        outputService.processOutput(inputFile.getName(), processed);
     }
 }
