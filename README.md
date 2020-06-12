@@ -39,7 +39,7 @@ For using aws file reading, please make sure you have the credentials up to date
      The program performs several steps coordinated by the TransportController class:
 
       1. Input processing
-      - DataSource Implementation read the input file content
+      - DataSource Implementation reads the input file content
 
       2. Service
       - FileHandler takes the file content and maps it to a list raw objects of type TransportDTO class
