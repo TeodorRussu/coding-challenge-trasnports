@@ -42,7 +42,7 @@ For using aws file reading, please make sure you have the credentials up to date
       - DataSource Implementation read the input file content
 
       2. Service
-      - FileHandler takes the file content and and maps it to a list raw objects of type TransportDTO class
+      - FileHandler takes the file content and maps it to a list raw objects of type TransportDTO class
       - TransportMapper converts each item from the TransportDTO list and maps it to a Car, Train or Plane object, depending the validations
       - DataProcessor takes the list of mapped objects, colects all the data into a single  TransportSummary object
 
