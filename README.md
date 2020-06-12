@@ -1,6 +1,10 @@
 #### Transports
 #### Usage
-The program can be customized by changing the configuration file:
+The program is a SpringBoot application and the entry point is the class:
+- TransportsApplication.
+
+
+<br />The functionality can be customized by changing the configuration file:
 ######  /src/main/resources/application.yml
 
 
