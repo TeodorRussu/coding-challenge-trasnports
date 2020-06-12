@@ -1,7 +1,7 @@
 spring.profiles.active: fs
 
 
-fs:path: 'src/test/resources/test_folder/valid_input'
+fs.path: 'src/test/resources/test_folder/valid_input'
 
 
 filename: file_data

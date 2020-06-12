@@ -11,7 +11,7 @@ import java.util.Map;
 @Component
 public interface TransportMapper {
 
-    public List<Transport> mapTransportDTOsToTransport(List<TransportDTO> transportDTOs);
+    List<Transport> mapTransportDTOsToTransport(List<TransportDTO> transportDTOs);
 
-    public TransportSummary mapTransportToTransportSummary(Map<String, Integer> transportsTotals);
+    TransportSummary mapTransportToTransportSummary(Map<String, Integer> transportsTotals);
 }

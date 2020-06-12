@@ -6,5 +6,5 @@ import java.io.File;
 
 @Component
 public interface DataSource {
-    public File getInputFile() throws Exception;
+    File getInputFile();
 }

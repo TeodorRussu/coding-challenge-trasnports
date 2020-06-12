@@ -1,7 +1,5 @@
 package task.transports.transports.input.datasource;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
@@ -25,7 +23,7 @@ import java.io.OutputStream;
 public class AwsDataSource implements DataSource {
 
     @Setter
-    @Value("${aws:bucket}")
+    @Value("${aws.bucket}")
     private String bucketName;
 
     @Setter
@@ -35,13 +33,9 @@ public class AwsDataSource implements DataSource {
     @Override
     public File getInputFile() {
 
-        Regions clientRegion = Regions.EU_CENTRAL_1;
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-            .withRegion(clientRegion)
-            .build();
+        AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
         File file = new File(fileName);
         file.deleteOnExit();
-
 
         try (S3Object s3Object = s3Client.getObject(bucketName, fileName);
              InputStreamReader streamReader = new InputStreamReader(s3Object.getObjectContent());
@@ -49,10 +43,11 @@ public class AwsDataSource implements DataSource {
              BufferedReader reader = new BufferedReader(streamReader)) {
 
             int read;
-            while ( ( read = reader.read() ) != -1 ) {
+            while ((read = reader.read()) != -1) {
                 writer.write(read);
             }
             writer.flush();
+            log.info("file {} downloladed from S3 bucket", fileName);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

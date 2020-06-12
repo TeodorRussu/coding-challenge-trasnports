@@ -48,6 +48,4 @@ public class TransportDTO {
     public void set(String name, String value) {
         other.put(name, value);
     }
-
-
 }

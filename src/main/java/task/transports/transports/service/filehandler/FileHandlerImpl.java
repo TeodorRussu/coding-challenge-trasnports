@@ -33,9 +33,10 @@ public class FileHandlerImpl implements FileHandler {
             } catch (JsonParseException | MismatchedInputException fileParsingException) {
                 log.error("File: {}, parsing error. Exception: {}. The file is invalid.", file.getName(),
                           fileParsingException.getMessage());
+                throw fileParsingException;
             }
         }
-        if (isNull(inputData)){
+        if (isNull(inputData)) {
             inputData = Collections.emptyList();
         }
         return inputData;

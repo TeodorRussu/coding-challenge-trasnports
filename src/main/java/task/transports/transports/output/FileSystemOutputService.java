@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 @Data
 public class FileSystemOutputService implements OutputService {
 
-    public static final String DELIMITER = "//";
+    public static final String DELIMITER = "/";
     private final String OUTPUT_JSON_FILENAME_PREFIX = "output_";
 
     @Value("${output.directory}")
@@ -28,9 +28,11 @@ public class FileSystemOutputService implements OutputService {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
+            String outputPath = path + DELIMITER + OUTPUT_JSON_FILENAME_PREFIX + fileName;
             Files.createDirectories(Paths.get(path));
             mapper.writerWithDefaultPrettyPrinter()
-                .writeValue(new File(path + DELIMITER + OUTPUT_JSON_FILENAME_PREFIX + fileName), filesSummary);
+                .writeValue(new File(outputPath), filesSummary);
+            log.info("Success! Output file path: {}", outputPath);
         } catch (IOException exception) {
             log.error(exception.getMessage());
         }

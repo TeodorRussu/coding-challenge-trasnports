@@ -1,5 +1,7 @@
 package task.transports.transports.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -31,8 +33,10 @@ class TransportControllerTest {
     @AfterEach
     void tearDown() {
         //clean output directory
-        cleanDirectory();
+        //cleanDirectory();
     }
+
+    //positive tests
 
     @SneakyThrows
     @Test
@@ -44,22 +48,101 @@ class TransportControllerTest {
         Assertions.assertTrue(Objects.requireNonNull(outputfiles).length > 0);
     }
 
-    @Test
     @SneakyThrows
-    void processInvalidFile() {
-        ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.INVALID_INPUT_PATH);
+    @Test
+    void processValidFileCarsOnly() {
+        testValidScenario(TestingResources.VALID_INPUT_FILE_NAME_CARS_ONLY);
+    }
 
+    @SneakyThrows
+    @Test
+    void processValidFileDieselCar() {
+        testValidScenario(TestingResources.VALID_INPUT_FILE_NAME_DIESEL_CAR);
+    }
+
+    @SneakyThrows
+    @Test
+    void processValidFileNoCars() {
+        testValidScenario(TestingResources.VALID_INPUT_FILE_NAME_NO_CARS);
+    }
+
+    private void testValidScenario(String validInputFileNameDieselCar) throws Exception {
+        ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.VALID_INPUT_PATH);
+        ReflectionTestUtils
+            .setField(controller.getDataSource(), "fileName", validInputFileNameDieselCar);
         File[] outputfiles = outputDirectory.listFiles();
         Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
-
         controller.processData();
-        Assertions.assertEquals(0, outputfiles.length);
+        outputfiles = outputDirectory.listFiles();
+        Assertions.assertTrue(Objects.requireNonNull(outputfiles).length > 0);
     }
+
+
+    //negative tests
+
+    @Test
+    @SneakyThrows
+    void processInvalidFileQqqq() {
+        ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.INVALID_INPUT_PATH);
+        ReflectionTestUtils
+            .setField(controller.getDataSource(), "fileName", TestingResources.INVALID_INPUT_FILENAME_QQQQ);
+
+        Assertions.assertThrows(JsonParseException.class, () -> controller.processData());
+        File[] outputfiles = outputDirectory.listFiles();
+        Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
+    }
+
+    @Test
+    @SneakyThrows
+    void processInvalidFileBicycles() {
+        testInvalidInput(TestingResources.INVALID_INPUT_FILENAME_BICYCLES);
+    }
+
+    @Test
+    @SneakyThrows
+    void processInvalidFileEmptyFile() {
+        testInvalidInput(TestingResources.INVALID_INPUT_FILENAME_EMPTY_FILE);
+    }
+
+    @Test
+    @SneakyThrows
+    void processInvalidFileEmptyJson() {
+        testEmptyFileOrNoOneValidEntry(TestingResources.INVALID_INPUT_FILENAME_EMPTY_JSON);
+    }
+
+    @Test
+    @SneakyThrows
+    void processInvalidFileAllMixed() {
+        testEmptyFileOrNoOneValidEntry(TestingResources.INVALID_INPUT_FILENAME_ALL_MIXED);
+    }
+
+    private void testInvalidInput(String invalidInputFilenameEmptyFile) {
+        ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.INVALID_INPUT_PATH);
+        ReflectionTestUtils
+            .setField(controller.getDataSource(), "fileName", invalidInputFilenameEmptyFile);
+
+        Assertions.assertThrows(MismatchedInputException.class, () -> controller.processData());
+        File[] outputfiles = outputDirectory.listFiles();
+        Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
+    }
+
+    private void testEmptyFileOrNoOneValidEntry(String invalidInputFilenameEmptyJson) {
+        ReflectionTestUtils.setField(controller.getDataSource(), "path", TestingResources.INVALID_INPUT_PATH);
+        ReflectionTestUtils
+            .setField(controller.getDataSource(), "fileName", invalidInputFilenameEmptyJson);
+
+        Assertions.assertThrows(Exception.class, () -> controller.processData());
+        File[] outputfiles = outputDirectory.listFiles();
+        Assertions.assertEquals(0, Objects.requireNonNull(outputfiles).length);
+    }
+
 
     private void cleanDirectory() {
         outputDirectory = new File(TestingResources.OUTPUT_PATH);
-        for (File file : Objects.requireNonNull(outputDirectory.listFiles()))
-            if (!file.isDirectory())
+        for (File file : Objects.requireNonNull(outputDirectory.listFiles())) {
+            if (!file.isDirectory()) {
                 file.delete();
+            }
+        }
     }
 }

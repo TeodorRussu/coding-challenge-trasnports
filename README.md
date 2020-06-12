@@ -1,4 +1,4 @@
-### Transports On the Cloud
+#### Transports
 #### Usage
 The program can be customized by changing the configuration file:
 ######  /src/main/resources/application.yml
@@ -11,9 +11,9 @@ Accepted values:<br />
 
 ```spring.profiles.active: 'aws'```
 
-<br/> If File System profile is selected, set the input directory path using `fs.path`. Please do not include the slash separator at the end of the path:
+<br/> If File System profile is selected, set the input directory path using `fs.path`. By default, the 'working_folder'(located in the project root) is used for read the input fle and write the output file. When setting a different directory, please do not include the slash separator at the end of the path.
 
-```fs.path: '/Users/trussu/Desktop/folder'```
+```fs.path: 'working_directory'```
 
 <br/>Property `filename` used for input file name. If the file used for running the program has an extension, please specify it: (i.e. file_data.json)
 
@@ -21,8 +21,8 @@ Accepted values:<br />
 
 <br/>Property `aws.bucket` for specifying the S3 bucket name:
 
-```aws.bucket: 'teodor-elm327'```
+```aws.bucket: 'bucket-name'```
 
 <br/>Output directory property (please do not include the slash separator at the end of the path)
-```output.directory: '/Users/trussu/Desktop/folder'```
+```output.directory: 'working_directory'```
 

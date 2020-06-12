@@ -9,5 +9,6 @@ import java.util.List;
 
 @Component
 public interface FileHandler {
-    public List<TransportDTO> getInputDataFromFile(File files) throws IOException;
+
+    List<TransportDTO> getInputDataFromFile(File files) throws IOException;
 }

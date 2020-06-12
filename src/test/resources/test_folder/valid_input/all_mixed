@@ -1,0 +1,10 @@
+{
+"transports": [
+{"model":"Boeing 777","b-passenger-capacity":14,"passenger-capacity":300},
+{"manufacturer":"BMW","passenger-capacity":4},
+{"number-wagons":5,"w-passenger-capacity":30},
+{"manufacturer":"Mercedes-Benz","model":"C-Klasse","e-passenger-capacity":4},
+{"b-passenger-capacity":10,"e-passenger-capacity":200},
+{"manufacturer":"Audi","passenger-capacity":6}
+]
+}

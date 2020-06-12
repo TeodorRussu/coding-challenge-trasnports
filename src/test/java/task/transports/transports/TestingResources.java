@@ -15,11 +15,20 @@ public class TestingResources {
 
     public static final String EMPTY_STRING = "";
     public static final String VALID_INPUT_PATH = "src/test/resources/test_folder/valid_input/";
-    public static final String VALID_INPUT_FILE_NAME = "file_data";
-    public static final String INVALID_INPUT_PATH = "src/test/resources/test_folder/invalid_input/file_data_invalid";
-    public static final String INVALID_INPUT_FILE_NAME = "file_data_invalid";
+    public static final String INVALID_INPUT_PATH = "src/test/resources/test_folder/invalid_input";
     public static final String OUTPUT_PATH = "src/test/resources/test_folder/output/";
-    public static final String DIRECTORY_PATH = "src/test/resources/test_folder/valid_input";
+
+    public static final String VALID_INPUT_FILE_NAME = "file_data";
+    public static final String VALID_INPUT_FILE_NAME_NO_CARS = "no_cars";
+    public static final String VALID_INPUT_FILE_NAME_CARS_ONLY = "cars_only";
+    public static final String VALID_INPUT_FILE_NAME_DIESEL_CAR = "diesel_car";
+
+
+    public static final String INVALID_INPUT_FILENAME_BICYCLES = "bicycles";
+    public static final String INVALID_INPUT_FILENAME_QQQQ = "qqqq";
+    public static final String INVALID_INPUT_FILENAME_EMPTY_JSON = "empty_json";
+    public static final String INVALID_INPUT_FILENAME_EMPTY_FILE = "empty_file";
+    public static final String INVALID_INPUT_FILENAME_ALL_MIXED = "all_mixed";
 
     private TestingResources() {
     }
@@ -64,9 +73,9 @@ public class TestingResources {
         transports.add(createPlane("AF", 15, 55));
         transports.add(createPlane("AL", 35, 45));
 
-        transports.add(createTrain(4, 30, "St"));
-        transports.add(createTrain(4, 30, "Alu"));
-        transports.add(createTrain(4, 30, "Gd"));
+        transports.add(createTrain(4, 44, "St"));
+        transports.add(createTrain(6, 30, "Alu"));
+        transports.add(createTrain(4, 65, "Gd"));
 
         return transports;
 
@@ -123,13 +132,6 @@ public class TestingResources {
         return TransportDTO.builder()
             .model("ICE")
             .wPassengerCapacity(50)
-            .build();
-    }
-
-    public static TransportDTO getInvalidCarDTO() {
-        return TransportDTO.builder()
-            .model("Q3")
-            .manufacturer("Audi")
             .build();
     }
 
