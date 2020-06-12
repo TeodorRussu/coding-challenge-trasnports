@@ -30,6 +30,10 @@ Accepted values:<br />
 <br/>Output directory property (please do not include the slash separator at the end of the path)
 ```output.directory: 'working_directory'```
 
+For using aws file reading, please make sure you have the credentials up to date for the bucket you want to use:
+```./.aws/credentials```
+
+
 #### Program design
     
      The program performs several steps coordinated by the TransportController> class:
