@@ -36,7 +36,7 @@ For using aws file reading, please make sure you have the credentials up to date
 
 #### Program design
     
-     The program performs several steps coordinated by the TransportController> class:
+     The program performs several steps coordinated by the TransportController class:
 
       1. Input processing
       - DataSource Implementation read the input file content
